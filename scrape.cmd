@@ -1,2 +1,4 @@
 py scraper.py
-"c:\Program Files\Mozilla Firefox\firefox.exe" %cd%\cache.html
+git add *
+git commit -m Daily
+git push
