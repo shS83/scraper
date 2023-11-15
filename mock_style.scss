@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz@6..12&display=swap');
 
 html {
+  background: url('./bgpattern.jpg') repeat, rgba(60, 60, 80, 0.9);
+  background-blend-mode: overlay;
   min-height: 100%;
-  background: #223;
   overflow-x: hidden;
   margin-right: calc(-1 * (100vw - 100%));
 }
 
+/*
 .bg-image {
   position: fixed;
   top: 0;
@@ -22,6 +24,7 @@ html {
   width: 100vw;
   height: 100vw;
 }
+*/
 
 body {
   color: #fff;
@@ -64,7 +67,7 @@ nav {
   z-index: 9999;
   display: flex;
   text-shadow: 1px 1px 2px #000;
-   flex-direction: column;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   /* justify-content: space-evenly; */
@@ -86,6 +89,7 @@ table {
   border-spacing: 5px;
 }
 
+/*
 #taulu0 {
   order: 0;
 }
@@ -98,7 +102,7 @@ table {
   order: -1;
 }
 
-/* #taulu1 {
+#taulu1 {
   order: 4;
 }
 
