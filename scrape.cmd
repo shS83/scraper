@@ -1,3 +1,4 @@
+@echo off
 git pull
 py scraper.py
 git add *
