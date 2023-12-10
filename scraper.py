@@ -72,15 +72,12 @@ def scrape(url: str):
             }
             if data_line not in to_return:
                 to_return.append(data_line)
-            # print(f'http://{domain}{s["href"]}', title.get_text())
 
     elif "muropaketti" in domain:
         heads = soup.find_all("h3", class_=re.compile("box-item__headline"))
-        # print(heads)
 
         for s in heads:
             item = s.find_next("a", href=re.compile("muropaketti"))
-            # print(scraped)
             data_line = {"title": item.get_text(), "href": item["href"]}
             if data_line not in to_return:
                 to_return.append(data_line)
@@ -144,15 +141,12 @@ def get_comic(url: str):
 def generate_table_html(scraped_list: list, url_prefix: str, domain: str):
     global all_tables
 
-    # c = 10
-    # b = 1
     table_html = [
         f'<table class="taulu" id="taulu{len(all_tables)}">',
         f"<caption>{domain.upper()} Headlines</caption>",
     ]
     for item in scraped_list:
         gradient = "background: #323263;"
-        # gradient = f"background: linear-gradient(to bottom, rgb({b}, {b}, {b * 2}), rgb({c}, {c}, {c * 2}));"
         t_s = f'<tr><td style="{gradient}">'
         t_e = "</td></tr>"
         h_text = item["title"].replace("­", "")
@@ -162,8 +156,6 @@ def generate_table_html(scraped_list: list, url_prefix: str, domain: str):
             address = f'{url_prefix}{item["href"]}'
         anchor = f'<a href="{address}">{h_text}</a>'
         table_html.append(f"{t_s}{anchor}{t_e}\n")
-        # b = c
-        # c += round(50 / len(scraped_list))
 
     table_html.append("</table>")
     return table_html
