@@ -1,3 +1,5 @@
+@echo off
+git pull
 py scraper.py
 git add *
 git commit -m Daily
