@@ -1,4 +1,5 @@
 @echo off
+rm cache.html
 git pull
 py scraper.py
 git add *
