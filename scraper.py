@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from urllib.parse import urlsplit
+from datetime import datetime
 
 all_tables = []
 comics = []
@@ -204,6 +205,7 @@ def generate_page(tables_list: list):
 
     output_start += nav_end
     output_start += '<div id="container">\n'
+    output_start += f'<p>updated {datetime.now()}</p>\n'
     output_end = """
     </div>
     </body>
