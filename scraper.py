@@ -22,7 +22,7 @@ def scrape(url: str):
     print("Site status OK" if status == 200 else f"ERROR {status}")
 
     if "yle" in domain:
-        scraped = soup.find_all("a", class_=re.compile("MinimalHeadlines__Link"))
+        scraped = soup.find_all("a", class_=re.compile("underlay-link"))
         for s in scraped:
             data_line = {"title": s.get_text(), "href": s["href"]}
             if data_line not in to_return:
