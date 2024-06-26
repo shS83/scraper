@@ -5,4 +5,8 @@ py scraper.py
 git add *
 git commit -m Daily
 git push
-pause
+echo.
+echo.
+echo Everthing either woked like a charm of were fucked up beyond recognition.. ENJOY!
+echo.
+sleep 1
