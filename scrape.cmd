@@ -9,4 +9,12 @@ echo.
 echo.
 echo Everthing either woked like a charm of were fucked up beyond recognition.. ENJOY!
 echo.
-sleep 1
+
+if [ "$1" != "--scheduled" ];
+then
+
+pause
+
+else
+
+echo.
