@@ -2,7 +2,7 @@
 
 echo "Scrape.sh version 0.0001 (c) shS 2024"
 
-exec source .venv/Scripts/activate&
+. .venv/Scripts/activate&
 
 if [ -f cache.html ]; then
 	echo "Old news found. Deleting..."
@@ -11,7 +11,7 @@ else
 	echo "Good news, no old news. Getting latest."
 fi
 
-exec python scraper.py&
+python scraper.py&
 
 echo \n
 echo "Committing changes..."
@@ -29,4 +29,4 @@ if [ $1 ]; then
 fi
 
 echo "All Done!"
-exec "deactivate"
+. "deactivate"
