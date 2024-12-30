@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from sys import exit
 import re
 from urllib.parse import urlsplit
 from datetime import datetime
@@ -287,3 +288,5 @@ def execute():
 
 if __name__ == "__main__":
     execute()
+    quit()
+    sys.exit()
