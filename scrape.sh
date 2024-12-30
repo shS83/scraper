@@ -23,7 +23,8 @@ git push
 
 if [ $1 ]; then
 	if [ $1 == "--scheduled" ]; then
-		read -t 5 -p "Paused for 5 seconds for convenience..."
+		echo "Pausing for 3 seconds or any key..."
+		read -t 5
 	fi
 fi
 
