@@ -253,7 +253,7 @@ def generate_page(tables_list: list):
     f.close()
 
     print("Done.")
-
+    return True
 
 def execute():
     global all_tables, comics
@@ -284,9 +284,12 @@ def execute():
 
     if False not in all_tables:
         generate_page(all_tables)
-
+        return True
+    else:
+        print(f"Error in all_tables: {all_tables}")
+        return False
 
 if __name__ == "__main__":
     execute()
     quit()
-    sys.exit()
+
