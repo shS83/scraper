@@ -2,7 +2,7 @@
 
 echo "Scrape.sh version 0.0001 (c) shS 2024"
 
-exec "source .venv/Scripts/activate"&
+exec source .venv/Scripts/activate&
 
 if [ -f cache.html ]; then
 	echo "Old news found. Deleting..."
