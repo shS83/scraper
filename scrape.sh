@@ -2,7 +2,7 @@
 
 echo "Scrape.sh version 0.0001 (c) shS 2024"
 
-. .venv/Scripts/activate&
+{$ (pwd) }.venv/Scripts/activate&
 
 if [ -f cache.html ]; then
 	echo "Old news found. Deleting..."
@@ -24,9 +24,9 @@ git push
 if [ $1 ]; then
 	if [ $1 == "--scheduled" ]; then
 		echo "Pausing for 3 seconds or any key..."
-		read -t 5
+		read -t 5 -p "_________"
 	fi
 fi
 
 echo "All Done!"
-. "deactivate"
+deactivate&

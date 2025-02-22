@@ -70,7 +70,7 @@ def scrape(url: str):
             title = s.find_next("span", class_="title")
             data_line = {
                 "title": title.get_text(),
-                "href": f'http://{domain}{s["href"]}',
+                "href": f'https://{domain}{s["href"]}',
             }
             if data_line not in to_return:
                 to_return.append(data_line)
@@ -111,9 +111,12 @@ def get_comic(url: str):
 
     if "hs" in url:
         scraped = soup.find("div", class_=re.compile("cartoon-content"))
-        a = scraped.find_next("a")
-        img = a.find_next("img")
-        comic = f'http:{img["data-srcset"].split(" ")[0]}'
+        try:
+            a = scraped.find_next("a")
+            img = a.find_next("img")
+            comic = f'http:{img["data-srcset"].split(" ")[0]}'
+        except AttributeError:
+            print("AttributeError in HS!")
 
     if "smbc" in url:
         scraped = soup.find("img", id=re.compile("cc-comic"))
@@ -206,7 +209,7 @@ def generate_page(tables_list: list):
 
     output_start += nav_end
     output_start += '<div id="container">\n'
-    output_start += f'<p>updated {datetime.now()}</p>\n'
+    output_start += f"<p>updated {datetime.now()}</p>\n"
     output_end = """
     </div>
     </body>
@@ -255,6 +258,7 @@ def generate_page(tables_list: list):
     print("Done.")
     return True
 
+
 def execute():
     global all_tables, comics
 
@@ -289,7 +293,7 @@ def execute():
         print(f"Error in all_tables: {all_tables}")
         return False
 
+
 if __name__ == "__main__":
     execute()
     quit()
-
