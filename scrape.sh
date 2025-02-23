@@ -13,11 +13,11 @@ fi
 
 python scraper.py&
 
-echo \n
+echo
 echo "Committing changes..."
-echo \n
+echo
 
-git add *
+git add cache.html
 git commit -m Daily
 git push
 
