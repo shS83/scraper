@@ -2,7 +2,7 @@
 
 echo "Scrape.sh version 0.0001 (c) shS 2024"
 
-.venv/Scripts/activate&
+source .venv/Scripts/activate
 
 if [ -f cache.html ]; then
 	echo "Old news found. Deleting..."
@@ -11,14 +11,14 @@ else
 	echo "Good news, no old news. Getting latest."
 fi
 
-python scraper.py&
+python scraper.py
 
 echo
 echo "Committing changes..."
 echo
 
 git add cache.html
-git commit -m Daily
+git commit -m "Daily"
 git push
 
 if [ $1 ]; then
@@ -29,4 +29,4 @@ if [ $1 ]; then
 fi
 
 echo "All Done!"
-deactivate&
+deactivate
