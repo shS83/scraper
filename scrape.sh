@@ -30,3 +30,4 @@ fi
 
 echo "All Done!"
 deactivate
+exit 0
