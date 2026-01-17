@@ -63,17 +63,19 @@ def scrape(url: str):
             if data_line not in to_return:
                 to_return.append(data_line)
 
-    elif "mikrobitti" in domain:
-        first = soup.find("div", id="skyscraper-height-div")
-        scraped = first.find_all_next("a", href=re.compile("/uutiset/"))
-        for s in scraped:
-            title = s.find_next("span", class_="title")
-            data_line = {
-                "title": title.get_text(),
-                "href": f'https://{domain}{s["href"]}',
-            }
-            if data_line not in to_return:
-                to_return.append(data_line)
+    # Troubleshooting for Mikrobitti
+
+    # elif "mikrobitti" in domain:
+    #     first = soup.find("div", id="skyscraper-height-div")
+    #     scraped = first.find_all_next("a", href=re.compile("/uutiset/"))
+    #     for s in scraped:
+    #         title = s.find_next("span", class_="title")
+    #         data_line = {
+    #             "title": title.get_text(),
+    #             "href": f'https://{domain}{s["href"]}',
+    #         }
+    #         if data_line not in to_return:
+    #             to_return.append(data_line)
 
     elif "muropaketti" in domain:
         heads = soup.find_all("h3", class_=re.compile("box-item__headline"))
