@@ -63,7 +63,7 @@ def scrape(url: str):
             if data_line not in to_return:
                 to_return.append(data_line)
 
-    # Troubleshooting for Mikrobitti
+    # Troubleshooting for MB
 
     # elif "mikrobitti" in domain:
     #     first = soup.find("div", id="skyscraper-height-div")
