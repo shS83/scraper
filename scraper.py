@@ -1,13 +1,109 @@
 import requests
 from bs4 import BeautifulSoup
-from sys import exit
+from typing import Any
 import re
 from urllib.parse import urlsplit, urljoin
 from datetime import datetime
 
 all_tables = []
 comics = []
+FINGERPORI_API_URL = (
+	"https://www.hs.fi/api/laneitems/"
+	"39221/list/normal/290"
+	"?listTemplate=teaser-m"
+)
 
+FINGERPORI_PAGE_URL = (
+	"https://www.hs.fi/sarjakuvat/fingerpori/"
+)
+
+
+def iter_dicts(value: Any):
+	if isinstance(value, dict):
+		yield value
+
+		for child in value.values():
+			yield from iter_dicts(child)
+
+	elif isinstance(value, list):
+		for child in value:
+			yield from iter_dicts(child)
+
+
+def get_latest_fingerpori() -> tuple[str, str] | None:
+	headers = {
+		"Accept": "application/json",
+		"Referer": FINGERPORI_PAGE_URL,
+		"User-Agent": (
+			"Mozilla/5.0 (X11; Linux x86_64; rv:153.0) "
+			"Gecko/20100101 Firefox/153.0"
+		),
+	}
+
+	response = requests.get(
+		FINGERPORI_API_URL,
+		headers=headers,
+		timeout=30,
+	)
+
+	response.raise_for_status()
+	data = response.json()
+
+	fingerporis = []
+
+	for item in iter_dicts(data):
+		if item.get("resourceType") != "Cartoon":
+			continue
+
+		if item.get("title") != "Fingerpori":
+			continue
+
+		picture = item.get("picture")
+
+		if not isinstance(picture, dict):
+			continue
+
+		if not item.get("href") or not picture.get("url"):
+			continue
+
+		fingerporis.append(item)
+
+	if not fingerporis:
+		print("Fingerpori API returned no cartoons.")
+		return None
+
+	latest = max(
+		fingerporis,
+		key=lambda item: (
+			datetime.fromisoformat(item["displayDate"]),
+			int(item["id"]),
+		),
+	)
+
+	article_url = urljoin(
+		FINGERPORI_PAGE_URL,
+		latest["href"],
+	)
+
+	image_url = (
+		latest["picture"]["url"]
+		.replace("WIDTH", "978")
+		.replace("EXT", "webp")
+	)
+
+	print(
+		f'Latest Fingerpori: {latest["displayDate"]}'
+	)
+
+	print(
+		f"Fingerpori article: {article_url}"
+	)
+
+	print(
+		f"Fingerpori image: {image_url}"
+	)
+
+	return article_url, image_url
 
 def scrape(url: str):
     domain = urlsplit(url).netloc
@@ -136,65 +232,13 @@ def get_comic(url: str):
     print(f"Scraping: {soup.title.get_text()}")
     print("Site status OK" if status == 200 else "ERROR")
 
-    if "hs" in url:
-        fingerpori_pattern = re.compile(
-            r"/sarjakuvat/fingerpori/car-(\d+)\.html"
-        )
+    if "hs.fi" in domain:
+        result = get_latest_fingerpori()
 
-        candidates = []
-
-        for link in soup.find_all("a", href=fingerpori_pattern):
-            match = fingerpori_pattern.search(link["href"])
-
-            if match is None:
-                print(f"Invalid Fingerpori link: {link['href']}")
-                continue
-
-            picture = link.find("picture")
-
-            if picture is None:
-                print(f"No picture found for Fingerpori article: {link['href']}")
-                continue
-
-            image = picture.find("img", src=True)
-
-            if image is None:
-                print(f"No image found for Fingerpori article: {link['href']}")
-                continue
-
-            candidates.append(
-                (
-                    int(match.group(1)),
-                    link,
-                    picture,
-                    image,
-                )
-            )
-
-        if candidates:
-            article_id, article_link, picture, image = max(
-                candidates,
-                key=lambda candidate: candidate[0],
-            )
-
-            # Suosi suurempaa WebP-versiota, jos sellainen on tarjolla.
-            source = picture.find(
-                "source",
-                attrs={"type": "image/webp"},
-            )
-
-            if source is not None and source.get("srcset"):
-                comic = source["srcset"].split()[0]
-            else:
-                comic = image["src"]
-
-            comic = urljoin(response.url, comic)
-
-            print(f"Latest Fingerpori article ID: {article_id}")
-            print(f"Latest Fingerpori image: {comic}")
-        else:
-            print("Fingerpori article or image not found.")
+        if result is None:
             return False
+
+        article_url, comic = result
 
     if "smbc" in url:
         scraped = soup.find("img", id=re.compile("cc-comic"))
