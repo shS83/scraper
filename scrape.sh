@@ -4,7 +4,7 @@
 # 	export SCRAPER_DIR=/where/you/cloned_this...where scraper.py is
 #
 
-echo "Scrape.sh version 0.0002 (c) shS 2024"
+echo "Scrape.sh version 0.15 (c) shS 2026"
 
 CDIR=$(pwd)
 SCRAPER_DIR=$SCRAPER_DIR
@@ -28,14 +28,14 @@ else
 	exit 1
 fi
 
-if [[ -f $SCRAPER_DIR/cache.html ]]; then
+if [[ -f $SCRAPER_DIR/news.html ]]; then
 	echo "Old news found. Deleting..."
-	rm cache.html -f
+	rm news.html -f
 else
 	echo "Good news, no old news. Getting latest."
 fi
 
-cd $SCRAPER_DIR/
+cd $SCRAPER_DIR
 
 if ! python ./scraper.py; then
 	echo
@@ -43,8 +43,8 @@ if ! python ./scraper.py; then
 	exit 1
 fi
 
-if [[ ! -f cache.html ]]; then
-	echo "Scraper finished without creating cache.html."
+if [[ ! -f news.html ]]; then
+	echo "Scraper finished without creating news.html."
 	exit 1
 fi
 
@@ -52,7 +52,7 @@ echo
 echo "Committing changes..."
 echo
 
-git add -- cache.html
+git add -- news.html
 
 if git diff --cached --quiet; then
 	echo "No changes to commit."
