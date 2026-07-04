@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from sys import exit
 import re
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urljoin
 from datetime import datetime
 
 all_tables = []
@@ -63,19 +63,44 @@ def scrape(url: str):
             if data_line not in to_return:
                 to_return.append(data_line)
 
-    # Troubleshooting for MB
+    elif "mikrobitti" in domain:
+        cards = soup.select(
+            "#main-content .full-article, "
+            "#main-content .thin-article, "
+            "#main-content .half-article"
+        )
 
-    # elif "mikrobitti" in domain:
-    #     first = soup.find("div", id="skyscraper-height-div")
-    #     scraped = first.find_all_next("a", href=re.compile("/uutiset/"))
-    #     for s in scraped:
-    #         title = s.find_next("span", class_="title")
-    #         data_line = {
-    #             "title": title.get_text(),
-    #             "href": f'https://{domain}{s["href"]}',
-    #         }
-    #         if data_line not in to_return:
-    #             to_return.append(data_line)
+        seen_urls = set()
+
+        print(f"Mikrobitti: found {len(cards)} article cards")
+
+        for card in cards:
+            link = card.find("a", href=True)
+
+            if link is None:
+                continue
+
+            title_element = card.select_one(".front-title")
+
+            if title_element is not None:
+                title = title_element.get_text(" ", strip=True)
+            else:
+                # Varakeino, jos front-title joskus taas muuttuu.
+                title = link.get_text(" ", strip=True)
+
+            address = urljoin(url, link["href"])
+
+            if not title or address in seen_urls:
+                continue
+
+            seen_urls.add(address)
+
+            to_return.append(
+                {
+                    "title": title,
+                    "href": address,
+                }
+            )
 
     elif "muropaketti" in domain:
         heads = soup.find_all("h3", class_=re.compile("box-item__headline"))
@@ -112,13 +137,64 @@ def get_comic(url: str):
     print("Site status OK" if status == 200 else "ERROR")
 
     if "hs" in url:
-        scraped = soup.find("div", class_=re.compile("cartoon-content"))
-        try:
-            a = scraped.find_next("a")
-            img = a.find_next("img")
-            comic = f'http:{img["data-srcset"].split(" ")[0]}'
-        except AttributeError:
-            print("AttributeError in HS!")
+        fingerpori_pattern = re.compile(
+            r"/sarjakuvat/fingerpori/car-(\d+)\.html"
+        )
+
+        candidates = []
+
+        for link in soup.find_all("a", href=fingerpori_pattern):
+            match = fingerpori_pattern.search(link["href"])
+
+            if match is None:
+                print(f"Invalid Fingerpori link: {link['href']}")
+                continue
+
+            picture = link.find("picture")
+
+            if picture is None:
+                print(f"No picture found for Fingerpori article: {link['href']}")
+                continue
+
+            image = picture.find("img", src=True)
+
+            if image is None:
+                print(f"No image found for Fingerpori article: {link['href']}")
+                continue
+
+            candidates.append(
+                (
+                    int(match.group(1)),
+                    link,
+                    picture,
+                    image,
+                )
+            )
+
+        if candidates:
+            article_id, article_link, picture, image = max(
+                candidates,
+                key=lambda candidate: candidate[0],
+            )
+
+            # Suosi suurempaa WebP-versiota, jos sellainen on tarjolla.
+            source = picture.find(
+                "source",
+                attrs={"type": "image/webp"},
+            )
+
+            if source is not None and source.get("srcset"):
+                comic = source["srcset"].split()[0]
+            else:
+                comic = image["src"]
+
+            comic = urljoin(response.url, comic)
+
+            print(f"Latest Fingerpori article ID: {article_id}")
+            print(f"Latest Fingerpori image: {comic}")
+        else:
+            print("Fingerpori article or image not found.")
+            return False
 
     if "smbc" in url:
         scraped = soup.find("img", id=re.compile("cc-comic"))
@@ -132,6 +208,10 @@ def get_comic(url: str):
     if "oglaf" in url:
         scraped = soup.find("img", id=re.compile("strip"))
         comic = scraped["src"]
+
+    if not comic:
+        print(f"Comic image not found: {url}")
+        return False
 
     domain_split = domain.split(".")
 
@@ -160,7 +240,7 @@ def generate_table_html(scraped_list: list, url_prefix: str, domain: str):
         if domain in item["href"]:
             address = item["href"]
         else:
-            address = f'{url_prefix}{item["href"]}'
+            address = urljoin(f"{url_prefix}/", item["href"])
         anchor = f'<a href="{address}">{h_text}</a>'
         table_html.append(f"{t_s}{anchor}{t_e}\n")
 
@@ -273,29 +353,52 @@ def execute():
         "https://www.mikrobitti.fi/",
     ]
 
-    for u in urls:
-        all_tables.append(scrape(u))
+    for url in urls:
+        try:
+            table = scrape(url)
+        except Exception as error:
+            print(
+                f"Error scraping {url}: "
+                f"{type(error).__name__}: {error}"
+            )
+            continue
 
-    c_urls = [
-        "https://www.hs.fi/fingerpori/",
+        if table:
+            all_tables.append(table)
+        else:
+            print(f"Skipping unsupported or failed source: {url}")
+
+    comic_urls = [
+        "https://www.hs.fi/sarjakuvat/fingerpori/",
         "https://www.smbc-comics.com/",
         "https://xkcd.com/",
         "https://www.oglaf.com/",
     ]
 
-    for c_url in c_urls:
-        comics.append(get_comic(c_url))
+    for url in comic_urls:
+        try:
+            table = get_comic(url)
+        except Exception as error:
+            print(
+                f"Error scraping comic {url}: "
+                f"{type(error).__name__}: {error}"
+            )
+            continue
+
+        if table:
+            comics.append(table)
+        else:
+            print(f"Skipping failed comic: {url}")
 
     all_tables.extend(comics)
 
-    if False not in all_tables:
-        generate_page(all_tables)
-        return True
-    else:
-        print(f"Error in all_tables: {all_tables}")
+    if not all_tables:
+        print("No tables were generated.")
         return False
+
+    generate_page(all_tables)
+    return True
 
 
 if __name__ == "__main__":
-    execute()
-    quit()
+    raise SystemExit(0 if execute() else 1)

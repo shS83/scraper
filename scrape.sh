@@ -37,15 +37,29 @@ fi
 
 cd $SCRAPER_DIR/
 
-python ./scraper.py
+if ! python ./scraper.py; then
+	echo
+	echo "Scraper failed. Nothing will be committed."
+	exit 1
+fi
+
+if [[ ! -f cache.html ]]; then
+	echo "Scraper finished without creating cache.html."
+	exit 1
+fi
 
 echo
 echo "Committing changes..."
 echo
 
-git add cache.html
-git commit -m "Daily news push..."
-git push
+git add -- cache.html
+
+if git diff --cached --quiet; then
+	echo "No changes to commit."
+else
+	git commit -m "Daily news push..."
+	git push
+fi
 
 if [[ "$1" != "" ]]; then
 	if [[ "$1" == "--scheduled" ]]; then
