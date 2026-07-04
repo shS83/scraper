@@ -11,40 +11,43 @@
   <div class="bg-image">
   </div>
   <nav class="navbar">
-   <button class="button after" onclick="change_0()" type="button">
+   <button class="button after" onclick="show_all()" type="button">
+    Kaikki
+   </button>
+   <button class="button after" onclick="show_only(0)" type="button">
     Yle
    </button>
-   <button class="button after" onclick="change_1()" type="button">
+   <button class="button after" onclick="show_only(1)" type="button">
     Iltalehti
    </button>
-   <button class="button after" onclick="change_2()" type="button">
+   <button class="button after" onclick="show_only(2)" type="button">
     Pelaaja
    </button>
-   <button class="button after" onclick="change_3()" type="button">
+   <button class="button after" onclick="show_only(3)" type="button">
     Muropaketti
    </button>
-   <button class="button after" onclick="change_4()" type="button">
+   <button class="button after" onclick="show_only(4)" type="button">
     Tomshardware
    </button>
-   <button class="button after" onclick="change_5()" type="button">
+   <button class="button after" onclick="show_only(5)" type="button">
     Mikrobitti
    </button>
-   <button class="button after" onclick="change_6()" type="button">
+   <button class="button after" onclick="show_only(6)" type="button">
     Fingerpori
    </button>
-   <button class="button after" onclick="change_7()" type="button">
+   <button class="button after" onclick="show_only(7)" type="button">
     Smbc-comics
    </button>
-   <button class="button after" onclick="change_8()" type="button">
+   <button class="button after" onclick="show_only(8)" type="button">
     Xkcd
    </button>
-   <button class="button after" onclick="change_9()" type="button">
+   <button class="button after" onclick="show_only(9)" type="button">
     Oglaf
    </button>
   </nav>
   <div id="container">
    <p>
-    updated 2026-07-04 09:59:25.424373
+    updated 2026-07-04 10:28:01.800964
    </p>
    <table class="taulu" id="taulu0">
     <caption>
@@ -66,27 +69,6 @@
     </tr>
     <tr>
      <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20234852">
-       Puolustusvoimat rajoittaa ilmailua ja meriliikennettä itäisellä Suomenlahdella Ukrainan droonihyökkäysten takia
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20010573">
-       Kyiv Independent: Ukraina tiettävästi iskenyt drooneilla Pietarin öljyterminaaliin
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20234271">
-       Lääkäri Elina Heikkinen sai humpuukia suoltavan kaiman Youtubeen – mikään hahmossa ei ole totta
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
       <a href="https://yle.fi/a/74-20234830">
        Taylor Swift ja Travis Kelce menivät naimisiin näyttävin menoin – hääjuhlien vieras: ”Se oli uskomatonta”
       </a>
@@ -101,22 +83,15 @@
     </tr>
     <tr>
      <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20212869">
-       Iran aloitti ajatollahin hautajaiset – katso suorana
+      <a href="https://yle.fi/a/74-20234271">
+       Lääkäri Elina Heikkinen sai humpuukia suoltavan kaiman Youtubeen – mikään hahmossa ei ole totta
       </a>
      </td>
     </tr>
     <tr>
      <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20234683">
-       Iranin islamistinen hallinto vahvistui sodassa – Vallankumous vaikuttaa entistä epätodennäköisemmältä, tutkija arvioi
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20234716">
-       Iranin entisen johtajan ruumis on ollut jäässä helmikuusta asti – tutkija ihmettelee, miten se säilyy 40 asteen helteessä
+      <a href="https://yle.fi/a/74-20230888">
+       Artistitulokas Lounaonline keräsi miljoonia kuuntelukertoja ilman levy-yhtiötä: ”Päätän itse, mitä teen”
       </a>
      </td>
     </tr>
@@ -136,15 +111,78 @@
     </tr>
     <tr>
      <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20234836">
-       Kolumbialle riitti yksi maali voittoon, Ghana ei saanut laukaustakaan maalia kohti – tässä tärkeimmät yön peleistä
+      <a href="https://yle.fi/a/74-20234304">
+       Liitto ihmettelee: Rakennusalalla tuhansia vailla töitä, mutta Pirkanmaalla työvoiman tuloa ulkomailta helpotetaan
       </a>
      </td>
     </tr>
     <tr>
      <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20230888">
-       Artistitulokas Lounaonline keräsi miljoonia kuuntelukertoja ilman levy-yhtiötä: ”Päätän itse, mitä teen”
+      <a href="https://yle.fi/a/74-20234852">
+       Tilanne ohi: Puolustusvoimat rajoitti liikennettä itäisellä Suomenlahdella Ukrainan droonihyökkäysten takia
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://yle.fi/a/74-20010573">
+       Ukraina iski Pietarin öljyterminaaliin
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://yle.fi/a/74-20212869">
+       Iran aloitti ajatollahin hautajaiset – katso suorana
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://yle.fi/a/74-20234683">
+       Tutkija: Iranin hallinto vahvistui sodassa, vaikka ylin johtaja kuoli
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://yle.fi/a/74-20234716">
+       Tutkija ihmettelee, miten ruumis säilyy kuukausia 40 asteen helteessä
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://areena.yle.fi/1-77995165">
+       Innokas Temu-kansa – miten suomalaisten krääsähulluus saadaan kuriin?
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://areena.yle.fi/1-77994939">
+       Venezuelassa kytee raivo maanjäristyksen jälkeen
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://areena.yle.fi/1-77994378">
+       Rydman vs. Orpo – järjestöleikkaukset ajoivat hallituksen kesäkriisiin
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://areena.yle.fi/1-77994128">
+       Suomi hakee kritisoituun YK:n turvallisuusneuvostoon – miksi?
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://areena.yle.fi/1-77992086">
+       Jalkapallon MM-kisoja varjostaa arvaamaton Trump ja ICE
       </a>
      </td>
     </tr>
@@ -183,13 +221,6 @@
       </a>
      </td>
     </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://yle.fi/a/74-20234820">
-       Kommentti: Lauri Markkasen tähdittämälle Susijengille arvokas voitto – railakas juhlahetki oli ansaittu
-      </a>
-     </td>
-    </tr>
    </table>
    <table class="taulu" id="taulu1">
     <caption>
@@ -197,8 +228,22 @@
     </caption>
     <tr>
      <td style="background: #323263;">
-      <a href="https://www.iltalehti.fi/ulkomaat/a/ac2a2c2f-fde9-4480-8973-51c0100cfded">
-       Pietarissa isoja räjähdyksiä
+      <a href="https://www.iltalehti.fi/ulkomaat/a/511e64e7-dcec-4ce3-9443-cdf4731e5a85">
+       Šokkipaljastus Trumpin salamurhayrityksestä: Näin salainen palvelu mokasi
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://www.iltalehti.fi/kotimaa/a/736e042b-5e0b-4295-aae3-77ba393375ae">
+       Mies vastasi ”pankin työntekijän” puheluun – Sitten tililtä katosi yli 168 000 euroa
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
+      <a href="https://www.iltalehti.fi/ulkomaat/a/758b4ebc-823a-4c47-9079-e5f67b44633b">
+       Moskovan ilmatorjunta pudotti alas 16 droonia – IL seuraa sotaa
       </a>
      </td>
     </tr>
@@ -212,7 +257,7 @@
     <tr>
      <td style="background: #323263;">
       <a href="https://www.iltalehti.fi/ulkomaat/a/b7a034af-b42f-4b07-bf66-d0b317f08fa8">
-       Halley jätti USA:n Trumpin takia – Havahtui vasta Suomessa siihen, mikä oli vialla
+       Halley pakeni Suomeen Trumpin takia – Huomasi pian merkittävän muutoksen
       </a>
      </td>
     </tr>
@@ -255,20 +300,6 @@
      <td style="background: #323263;">
       <a href="https://www.iltalehti.fi/ulkomaat/a/034a0936-0f03-4fdb-9b0c-ffef5cdd6d03">
        Viiltävä piikki Trumpille – ”Meidän rakas johtajamme”
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://www.iltalehti.fi/kotimaa/a/23baa0fd-8d54-4f8e-a943-25d34e43e3e6">
-       Näin pelastusliivejä käytetään väärin – Seuraukset voivat olla kohtalokkaat
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://www.iltalehti.fi/ulkomaat/a/670bce3b-82c9-4bc2-b2e0-fea976a48f82">
-       Sotilaita kaatava uhka Ukrainan rintamalla
       </a>
      </td>
     </tr>
@@ -388,6 +419,13 @@
     </caption>
     <tr>
      <td style="background: #323263;">
+      <a href="https://muropaketti.com/elokuvat/elokuvauutiset/galaksimme-ytimessa-piilee-ehka-nakymaton-hairikko/">
+       Galaksimme ytimessä piilee ehkä näkymätön häirikkö
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
       <a href="https://muropaketti.com/yleinen/hmdn-uudet-nokia-peruspuhelimet-on-varustettu-tilausmaksullisilla-tekoalytoiminnoilla/">
        HMD:n uudet Nokia-peruspuhelimet on varustettu tilausmaksullisilla tekoälytoiminnoilla
       </a>
@@ -411,13 +449,6 @@
      <td style="background: #323263;">
       <a href="https://muropaketti.com/pelit/peliuutiset/yksi-microsoftin-arvostetuimmista-pelistudioista-saattaa-olla-sulkemisuhan-alla/">
        Yksi Microsoftin arvostetuimmista pelistudioista saattaa olla sulkemisuhan alla
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://muropaketti.com/elokuvat/elokuvauutiset/jodie-foster-arveli-etta-brad-pittin-hittielokuva-on-tehty-tekoalylla-eiko-se-muka-ollut/">
-       Jodie Foster arveli, että Brad Pittin hittielokuva on tehty tekoälyllä: ”Eikö se muka ollut?”
       </a>
      </td>
     </tr>
@@ -584,6 +615,13 @@
     </tr>
     <tr>
      <td style="background: #323263;">
+      <a href="https://muropaketti.com/elokuvat/elokuvauutiset/jodie-foster-arveli-etta-brad-pittin-hittielokuva-on-tehty-tekoalylla-eiko-se-muka-ollut/">
+       Jodie Foster arveli, että Brad Pittin hittielokuva on tehty tekoälyllä: ”Eikö se muka ollut?”
+      </a>
+     </td>
+    </tr>
+    <tr>
+     <td style="background: #323263;">
       <a href="https://muropaketti.com/elokuvat/elokuvauutiset/elijah-wood-kiusoittelee-onko-frodo-mukana-toisessakin-tulevassa-taru-sormusten-herrasta-elokuvassa/">
        Elijah Wood kiusoittelee: Onko Frodo mukana toisessakin tulevassa Taru sormusten herrasta -elokuvassa?
       </a>
@@ -614,13 +652,6 @@
      <td style="background: #323263;">
       <a href="https://muropaketti.com/elokuvat/elokuvauutiset/kevaalla-elokuvateattereissa-julkaistu-muumio-elokuva-on-nyt-katsottavissa-hbo-maxista/">
        Keväällä elokuvateattereissa julkaistu Muumio-elokuva  on nyt katsottavissa HBO Maxista
-      </a>
-     </td>
-    </tr>
-    <tr>
-     <td style="background: #323263;">
-      <a href="https://muropaketti.com/elokuvat/elokuvauutiset/forest-whitakerin-harmillisen-vahalle-huomiolle-jaanyt-godfather-of-harlem-mafiasarja-sai-kirvesta-kalloon-luvassa-silti-kunnon-lopetus/">
-       Forest Whitakerin harmillisen vähälle huomiolle jäänyt Godfather of Harlem -mafiasarja sai kirvestä kalloon – luvassa silti kunnon lopetus
       </a>
      </td>
     </tr>
@@ -1085,7 +1116,7 @@
     <tr>
      <td style="background: #323263;">
       <a href="https://www.mikrobitti.fi/digiuutiset/a/65f1bfad-b806-4ff5-ab47-f9a63453f2ba">
-       USA:n kieltäm ät tekoälyt palautetaan maailmalle
+       USA:n kieltämät tekoälyt palautetaan maailmalle
       </a>
      </td>
     </tr>
@@ -1120,7 +1151,7 @@
     <tr>
      <td style="background: #323263;">
       <a href="https://www.mikrobitti.fi/digiuutiset/a/bac77e7d-71c3-4673-8299-fcdf6be5886b">
-       Tällainen lomaviesti voi tyhjent ää tilisi huomaamattasi
+       Tällainen lomaviesti voi tyhjentää tilisi huomaamattasi
       </a>
      </td>
     </tr>
@@ -1188,86 +1219,20 @@
     </tr>
    </table>
    <script type="text/javascript">
-    function change_0() {
-        let x = document.getElementById("taulu0");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_1() {
-        let x = document.getElementById("taulu1");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_2() {
-        let x = document.getElementById("taulu2");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_3() {
-        let x = document.getElementById("taulu3");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_4() {
-        let x = document.getElementById("taulu4");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_5() {
-        let x = document.getElementById("taulu5");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_6() {
-        let x = document.getElementById("taulu6");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_7() {
-        let x = document.getElementById("taulu7");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_8() {
-        let x = document.getElementById("taulu8");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
-function change_9() {
-        let x = document.getElementById("taulu9");
-        if (x.style.display === "none") {
-            x.style.display = "";
-        } else {
-            x.style.display = "none";
-        }
-    }
+    function show_only(index) {
+			const wantedId = `taulu${index}`;
+
+			document.querySelectorAll("table.taulu").forEach((table) => {
+				table.style.display =
+					table.id === wantedId ? "" : "none";
+			});
+		}
+
+		function show_all() {
+			document.querySelectorAll("table.taulu").forEach((table) => {
+				table.style.display = "";
+			});
+		}
    </script>
   </div>
  </body>
