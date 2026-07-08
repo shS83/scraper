@@ -1,13 +1,15 @@
 ## Daily news scraper
 _____________________
 
-Scrapes some popular finnish sites.. poorly.
+Scrapes some popular finnish sites.. sufficiently.
 
 Installation:
 
-	1. git clone this
-	2. uv sync
-	3. export SCRAPER_DIR="current_directory"
-	4. test it.
+Warning, the git push action in scrape.sh won't work if you don't fork this repository.
 
--shS '25
+	1. git clone https://www.github.com/shS83/scraper.git; cd scraper
+	2. uv sync
+	3. SCRAPER_DIR="$(pwd)"; export SCRAPER_DIR           # make sure you're in the same directory as scrape.sh
+	4. ./scrape.sh
+
+-shS '26
