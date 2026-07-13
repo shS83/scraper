@@ -52,20 +52,13 @@ echo
 echo "Committing changes..."
 echo
 
-git add -- news.html
+git add --all
 
 if git diff --cached --quiet; then
 	echo "No changes to commit."
 else
-	git commit -m "Daily news push..."
+	git commit -m "Daily news update $(date '+%F %T')"
 	git push
-fi
-
-if [[ "$1" != "" ]]; then
-	if [[ "$1" == "--scheduled" ]]; then
-		echo "Pausing for 3 seconds or any key..."
-		read -t 5 -p "_________"
-	fi
 fi
 
 echo "All Done!"
