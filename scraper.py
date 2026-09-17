@@ -4,6 +4,7 @@ from typing import Any
 import re
 from urllib.parse import urlsplit, urljoin
 from datetime import datetime
+from colors import colors as c
 
 all_tables = []
 comics = []
@@ -69,7 +70,7 @@ def get_latest_fingerpori() -> tuple[str, str] | None:
 		fingerporis.append(item)
 
 	if not fingerporis:
-		print("Fingerpori API returned no cartoons.")
+		print(f"{c.CRIMSON}Fingerpori API returned no cartoons.{c.RESET}")
 		return None
 
 	latest = max(
@@ -92,15 +93,15 @@ def get_latest_fingerpori() -> tuple[str, str] | None:
 	)
 
 	print(
-		f'Latest Fingerpori: {latest["displayDate"]}'
+		f'Latest {c.BRIGHT_GREEN}Fingerpori{c.RESET}: {c.LIME_GREEN}{latest["displayDate"]}{c.RESET}'
 	)
 
 	print(
-		f"Fingerpori article: {article_url}"
+		f"Fingerpori article: {c.LIME_GREEN}{article_url}{c.RESET}"
 	)
 
 	print(
-		f"Fingerpori image: {image_url}"
+		f"Fingerpori image: {c.LIME_GREEN}{image_url}{c.RESET}"
 	)
 
 	return article_url, image_url
@@ -115,8 +116,8 @@ def scrape(url: str):
 	status = response.status_code
 	content = response.content
 	soup = BeautifulSoup(content, "html.parser")
-	print(f"Scraping: {soup.title.get_text()}")
-	print("Site status OK" if status == 200 else f"ERROR {status}")
+	print(f"Scraping: {c.BANANA}{soup.title.get_text()}{c.RESET}")
+	print(f"Site status {c.LIME_GREEN}OK{c.RESET}" if status == 200 else f"ERROR {status}")
 
 	if "yle" in domain:
 		scraped = soup.find_all("a", class_=re.compile("underlay-link"))
