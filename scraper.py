@@ -74,9 +74,9 @@ def get_latest_fingerpori() -> tuple[str, str] | None:
 
 	latest = max(
 		fingerporis,
-		key=lambda item: (
-			datetime.fromisoformat(item["displayDate"]),
-			int(item["id"]),
+		key=lambda obj: (
+			datetime.fromisoformat(obj["displayDate"]),
+			int(obj["id"]),
 		),
 	)
 
@@ -147,6 +147,8 @@ def scrape(url: str):
 			if "image/svg+xml" in ugly[0] or "Episodi.fi" in ugly[0]:
 				continue
 			prettier = ugly[0].replace("Uutinen | ", "")
+			if prettier == "Pelaaja.fi" or prettier == "Como" or prettier == "":
+				continue
 			data_line = {"title": prettier, "href": s["href"]}
 			if data_line not in to_return:
 				to_return.append(data_line)
