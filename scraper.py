@@ -128,15 +128,15 @@ def scrape(url: str):
 	elif "iltalehti" in domain:
 		full = soup.find("div", class_="full-article")
 		head_full = full.find_next("div", class_="front-title")
-		fullhref = full.find_next("a")
-		data_line = {"title": head_full.get_text(), "href": fullhref["href"]}
+		full_href = full.find_next("a")
+		data_line = {"title": head_full.get_text(), "href": full_href["href"]}
 		if data_line not in to_return:
 			to_return.append(data_line)
 		halves = soup.find_all("a", class_="half-article-content")
 
 		for h in halves:
-			halfhead = h.find_next("div", class_="front-title")
-			data_line = {"title": halfhead.get_text(), "href": h["href"]}
+			half_head = h.find_next("div", class_="front-title")
+			data_line = {"title": half_head.get_text(), "href": h["href"]}
 			if data_line not in to_return:
 				to_return.append(data_line)
 
@@ -226,7 +226,7 @@ def scrape(url: str):
 
 def get_comic(url: str):
 	domain = urlsplit(url).netloc
-	comic = False
+	comic: str | bool = False
 	response = requests.get(url)
 	status = response.status_code
 	content = response.content
@@ -294,7 +294,7 @@ def generate_table_html(scraped_list: list, url_prefix: str, domain: str):
 	return table_html
 
 
-def comics_to_tables(comic: str, url_prefix: str, domain: str):
+def comics_to_tables(comic: str | bool, url_prefix: str, domain: str):
 	global all_tables, comics
 	title = domain.upper()
 	if title == "HS":
