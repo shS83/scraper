@@ -171,7 +171,7 @@ def scrape(url: str):
 
 		seen_urls = set()
 
-		print(f"Mikrobitti: found {len(cards)} article cards")
+		print(f"Mikrobitti: found {c.RED}{len(cards)}{c.RESET} article cards")
 
 		for card in cards:
 			link = card.find("a", href=True)
@@ -232,8 +232,8 @@ def get_comic(url: str):
 	status = response.status_code
 	content = response.content
 	soup = BeautifulSoup(content, "html.parser")
-	print(f"Scraping: {soup.title.get_text()}")
-	print("Site status OK" if status == 200 else "ERROR")
+	print(f"Scraping: {c.BANANA}{soup.title.get_text()}{c.RESET}")
+	print(f"{c.LIME_GREEN}Site status OK{c.RESET}" if status == 200 else f"{c.CRIMSON}ERROR{c.RESET}")
 
 	if "hs.fi" in domain:
 		result = get_latest_fingerpori()
@@ -401,7 +401,7 @@ def generate_page(tables_list: list):
 		f.write(prettier_soppa)
 	f.close()
 
-	print("Done.")
+	print(f"{c.GREEN}Done.{c.RESET}")
 	return True
 
 
@@ -422,8 +422,8 @@ def execute():
 			table = scrape(url)
 		except Exception as error:
 			print(
-				f"Error scraping {url}: "
-				f"{type(error).__name__}: {error}"
+				f"{c.CRIMSON}Error scraping {url}: "
+				f"{type(error).__name__}: {error}{c.RESET}"
 			)
 			continue
 
