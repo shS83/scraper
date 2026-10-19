@@ -4,6 +4,7 @@ from typing import Any
 import re
 from urllib.parse import urlsplit, urljoin
 from datetime import datetime
+from colors import colors as c
 
 all_tables = []
 comics = []
@@ -69,14 +70,14 @@ def get_latest_fingerpori() -> tuple[str, str] | None:
 		fingerporis.append(item)
 
 	if not fingerporis:
-		print("Fingerpori API returned no cartoons.")
+		print(f"{c.CRIMSON}Fingerpori API returned no cartoons.{c.RESET}")
 		return None
 
 	latest = max(
 		fingerporis,
-		key=lambda item: (
-			datetime.fromisoformat(item["displayDate"]),
-			int(item["id"]),
+		key=lambda obj: (
+			datetime.fromisoformat(obj["displayDate"]),
+			int(obj["id"]),
 		),
 	)
 
@@ -92,15 +93,15 @@ def get_latest_fingerpori() -> tuple[str, str] | None:
 	)
 
 	print(
-		f'Latest Fingerpori: {latest["displayDate"]}'
+		f'Latest {c.BRIGHT_GREEN}Fingerpori{c.RESET}: {c.LIME_GREEN}{latest["displayDate"]}{c.RESET}'
 	)
 
 	print(
-		f"Fingerpori article: {article_url}"
+		f"Fingerpori article: {c.LIME_GREEN}{article_url}{c.RESET}"
 	)
 
 	print(
-		f"Fingerpori image: {image_url}"
+		f"Fingerpori image: {c.LIME_GREEN}{image_url}{c.RESET}"
 	)
 
 	return article_url, image_url
@@ -115,8 +116,8 @@ def scrape(url: str):
 	status = response.status_code
 	content = response.content
 	soup = BeautifulSoup(content, "html.parser")
-	print(f"Scraping: {soup.title.get_text()}")
-	print("Site status OK" if status == 200 else f"ERROR {status}")
+	print(f"Scraping: {c.BANANA}{soup.title.get_text()}{c.RESET}")
+	print(f"Site status {c.LIME_GREEN}OK{c.RESET}" if status == 200 else f"ERROR {status}")
 
 	if "yle" in domain:
 		scraped = soup.find_all("a", class_=re.compile("underlay-link"))
@@ -128,15 +129,15 @@ def scrape(url: str):
 	elif "iltalehti" in domain:
 		full = soup.find("div", class_="full-article")
 		head_full = full.find_next("div", class_="front-title")
-		fullhref = full.find_next("a")
-		data_line = {"title": head_full.get_text(), "href": fullhref["href"]}
+		full_href = full.find_next("a")
+		data_line = {"title": head_full.get_text(), "href": full_href["href"]}
 		if data_line not in to_return:
 			to_return.append(data_line)
 		halves = soup.find_all("a", class_="half-article-content")
 
 		for h in halves:
-			halfhead = h.find_next("div", class_="front-title")
-			data_line = {"title": halfhead.get_text(), "href": h["href"]}
+			half_head = h.find_next("div", class_="front-title")
+			data_line = {"title": half_head.get_text(), "href": h["href"]}
 			if data_line not in to_return:
 				to_return.append(data_line)
 
@@ -147,6 +148,8 @@ def scrape(url: str):
 			if "image/svg+xml" in ugly[0] or "Episodi.fi" in ugly[0]:
 				continue
 			prettier = ugly[0].replace("Uutinen | ", "")
+			if prettier == "Pelaaja.fi" or prettier == "Como" or prettier == "":
+				continue
 			data_line = {"title": prettier, "href": s["href"]}
 			if data_line not in to_return:
 				to_return.append(data_line)
@@ -168,7 +171,7 @@ def scrape(url: str):
 
 		seen_urls = set()
 
-		print(f"Mikrobitti: found {len(cards)} article cards")
+		print(f"Mikrobitti: found {c.RED}{len(cards)}{c.RESET} article cards")
 
 		for card in cards:
 			link = card.find("a", href=True)
@@ -224,13 +227,13 @@ def scrape(url: str):
 
 def get_comic(url: str):
 	domain = urlsplit(url).netloc
-	comic = False
+	comic: str | bool = False
 	response = requests.get(url)
 	status = response.status_code
 	content = response.content
 	soup = BeautifulSoup(content, "html.parser")
-	print(f"Scraping: {soup.title.get_text()}")
-	print("Site status OK" if status == 200 else "ERROR")
+	print(f"Scraping: {c.BANANA}{soup.title.get_text()}{c.RESET}")
+	print(f"{c.LIME_GREEN}Site status OK{c.RESET}" if status == 200 else f"{c.CRIMSON}ERROR{c.RESET}")
 
 	if "hs.fi" in domain:
 		result = get_latest_fingerpori()
@@ -292,7 +295,7 @@ def generate_table_html(scraped_list: list, url_prefix: str, domain: str):
 	return table_html
 
 
-def comics_to_tables(comic: str, url_prefix: str, domain: str):
+def comics_to_tables(comic: str | bool, url_prefix: str, domain: str):
 	global all_tables, comics
 	title = domain.upper()
 	if title == "HS":
@@ -398,7 +401,7 @@ def generate_page(tables_list: list):
 		f.write(prettier_soppa)
 	f.close()
 
-	print("Done.")
+	print(f"{c.GREEN}Done.{c.RESET}")
 	return True
 
 
@@ -419,8 +422,8 @@ def execute():
 			table = scrape(url)
 		except Exception as error:
 			print(
-				f"Error scraping {url}: "
-				f"{type(error).__name__}: {error}"
+				f"{c.CRIMSON}Error scraping {url}: "
+				f"{type(error).__name__}: {error}{c.RESET}"
 			)
 			continue
 
