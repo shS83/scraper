@@ -52,15 +52,36 @@ echo
 echo "Committing changes..."
 echo
 
-git add --all
-
-if git diff --cached --quiet; then
-	echo "No changes to commit."
-else
-	git commit -m "Daily news update $(date '+%F %T')"
-	git push
+if ! git add --all; then
+    echo "ERROR: git add failed!" >&2
+    deactivate
+    exit 1
 fi
 
+if git diff --cached --quiet; then
+    echo "No changes to commit."
+else
+    if ! git commit -m "Daily news update $(date '+%F %T')"; then
+        echo "ERROR: git commit failed!" >&2
+        deactivate
+        exit 1
+    fi
+fi
+
+echo
+echo "Pushing to GitHub..."
+echo
+
+if ! git push; then
+    echo "ERROR: Git push failed!" >&2
+    echo "Remote repository may contain newer commits." >&2
+    echo "Resolve the conflict manually before the next run." >&2
+    deactivate
+    exit 1
+fi
+
+echo
 echo "All Done!"
+
 deactivate
 exit 0
